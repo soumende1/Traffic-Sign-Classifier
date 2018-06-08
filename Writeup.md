@@ -52,7 +52,7 @@ Then the algorithm was first tried on images, Five images files as given below w
 
 Associated images with the detected lanes were outputted in “/test_images_out” inside the working directory
 
-![input image](/test_images/solidWhiteRight.jpg, widht= "48")
+![input image](/test_images/solidWhiteRight.jpg widht= "48")
 ![output image](/test_images_out/solidWhiteRight.jpg=250*250)
 
 Once the lanes were detected , the final test was done two videos files below kept in “/video” folder inside the working folder
