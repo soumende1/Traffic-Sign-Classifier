@@ -19,7 +19,7 @@ The following steps were used to develop and test the above algorithm:
 •	Merge Original Image with Lines
 •	Video Test
 
-Approach:
+## Approach:
 First the necessary libraries were imported:
 #importing some useful packages
 import matplotlib.pyplot as plt
@@ -44,17 +44,17 @@ The function implemented was
 def draw_lines(img, lines, color=[255, 0, 0], thickness=2):
 
 Then the algorithm was first tried on images, Five images files as given below was fed into the algorithm. They were kept in the “/test_images” folder inside the working directory
-solidWhiteRight
-solidYellowCurve
-solidYellowCurve2
-solidYellowLeft
-whiteCarLaneSwitch
+* solidWhiteRight
+* solidYellowCurve
+* solidYellowCurve2
+* solidYellowLeft
+* whiteCarLaneSwitch
 
 Associated images with the detected lanes were outputted in “/test_images_out” inside the working directory
 
 Once the lanes were detected , the final test was done two videos files below kept in “/video” folder inside the working folder
-solidWhiteRight.mp4
-solidYellowLeft.mp4
+* solidWhiteRight.mp4
+* solidYellowLeft.mp4
 
 The function used was fl_image which modifies the images of a video clip by replacing then images using the driver image processing function “process_image”
 
