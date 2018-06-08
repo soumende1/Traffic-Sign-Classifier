@@ -1,5 +1,5 @@
-#Uadcity Self Driving Car Nanodegree Program: Finding Lane Lines on the Road
-##This project requires us to detect lanes lines in a video file using basic computer vision. In the video, the lines on the road show us where the lanes to serve as  constant reference for the vehicle to self steer. This project aims at automatically detecting lane lines using an algorithm. 
+# **Uadcity Self Driving Car Nanodegree Program: Finding Lane Lines on the Road**
+## This project requires us to detect lanes lines in a video file using basic computer vision. In the video, the lines on the road show us where the lanes to serve as  constant reference for the vehicle to self steer. This project aims at automatically detecting lane lines using an algorithm. 
 
 The tools used are:
 1.	Python3
