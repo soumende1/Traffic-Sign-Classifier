@@ -52,7 +52,7 @@ Then the algorithm was first tried on images, Five images files as given below w
 
 Associated images with the detected lanes were outputted in “/test_images_out” inside the working directory
 
-![input image](/test_images/solidWhiteRight.jpg) {:height="36px" width="36px"}.
+![input image](/test_images/solidWhiteRight.jpg? width=20%) 
 ![output image](/test_images_out/solidWhiteRight.jpg)
 
 
