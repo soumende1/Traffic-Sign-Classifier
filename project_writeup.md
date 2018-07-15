@@ -396,7 +396,7 @@ _How did you train your model? (Type of optimizer, batch size, epochs, hyperpara
 
 **Answer:**
 
-I used the Adam optimizer (already implemented in the LeNet lab). The final settings used were:
+To train the network Adam optimizer was used. The final settings used were:
 - batch size: 100
 - epochs: 60
 - learning rate: 0.0009
@@ -411,55 +411,21 @@ _What approach did you take in coming up with a solution to this problem? It may
 
 **Answer:**
 
-My approach was a little of both. Like I mentioned earlier, I started with pre-defined architectures (LeNet and the Sermanet/LeCun model) and almost all of the tweaking from there was a process of trial and error. Thankfully, my guesses were educated thanks to working through the Tensorflow and LeNet labs. I had also worked through the exercises for the Udacity Deep Learning course, and it was at that time that I discovered that trial and error is pretty much a losing strategy when it comes to building the neural net. I kept a log of my experiments, above, that shows how I played with hyperparameters to get a good level of validation accuracy.
+Starting was done by implementing  pre-defined architectures (LeNet and the Sermanet/LeCun model) and tweaking the model using  trial and error. working on mock codes in the class room training and also looking for some example codes for  Tensorflow and LeNet labs helped
 
 ---
 
 ## Step 3: Test a Model on New Images
 
-Take several pictures of traffic signs that you find on the web or around you (at least five), and run them through your classifier on your computer to produce example results. The classifier might not recognize some local signs but it could prove interesting nonetheless.
+Several pictures of traffic signs found from public domain were used to test the model. Either images which were 32 by 32 pixels were used. If the image had a higher resolution, then the following python code was used to resize them 
 
-You may find `signnames.csv` useful as it contains mappings from the class id (integer) to the actual sign name.
+The file `signnames.csv` can be used to to map the predicted class id (integer) to the actual sign name.
 
 ### Implementation
 
 Use the code cell (or multiple code cells, if necessary) to implement the first step of your project. Once you have completed your implementation and are satisfied with the results, be sure to thoroughly answer the questions that follow.
 
 
-```python
-### Load the images and plot them here.
-### Feel free to use as many code cells as needed.
-
-#reading in an image
-import os
-import matplotlib.image as mpimg
-
-fig, axs = plt.subplots(2,4, figsize=(4, 2))
-fig.subplots_adjust(hspace = .2, wspace=.001)
-axs = axs.ravel()
-
-my_images = []
-
-for i, img in enumerate(os.listdir('my-found-traffic-signs/')):
-    image = cv2.imread('my-found-traffic-signs/' + img)
-    axs[i].axis('off')
-    axs[i].imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    my_images.append(image)
-
-my_images = np.asarray(my_images)
-
-my_images_gry = np.sum(my_images/3, axis=3, keepdims=True)
-
-my_images_normalized = (my_images_gry - 128)/128 
-
-print(my_images_normalized.shape)
-```
-
-    (8, 32, 32, 1)
-
-
-
-![png](output_57_1.png)
 
 
 ### Question 6
@@ -470,7 +436,9 @@ _Choose five candidate images of traffic signs and provide them in the report. A
 
 **Answer:** 
 
-Nothing in particular sticks out that I think would make classification difficult. My images appear to be more easily distinguishable than quite a few images from the original dataset. I noticed that my images tend to be quite a bit brighter and might occupy a different range in the color space, possibly a range that the model was not trained on.
+All five images were classified correctly by the model. the prediction works when the test images were of the size 32 by 32 pixel. when another image ie used which is more that that size then suitabe tranformation was used to resize them to 32 by 32 size.
+''python
+    img_resized = cv2.resize(img, (32, 32))
 
 
 ```python
