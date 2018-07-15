@@ -151,7 +151,9 @@ The training data was preprocessed using the following approach:
  1. Converting to grayscale -
  2. Normalizing the data to the range (-1,1) - This was done using the line of code X_train_normalized = (X_train - 128)/128. The resulting dataset mean wasn't exactly zero, but it was reduced from around 82 to roughly -0.35.
  3. Data was augmented using Four functions: random_translate, random_scale, random_warp, and random_brightness. Augmentation was done for those classes whose sample size were less than 800. See code snippet below
+ 
 '''python
+
 for class_n in range(n_classes):
     print(class_n, ': ', end='')
     class_indices = np.where(y_train == class_n)
