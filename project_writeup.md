@@ -118,7 +118,7 @@ plt.bar(center, hist, align='center', width=width)
 plt.show()
 ```
 
-
+A Frequency count of number of training data per class was obtained. Here the goal was to idetify class whose data size was less than 800 records. in later section a data augmentation strategy will be used to augment the number of records for those classes
 ![Frequency count of initial training data](/images/im02.png)
 
 
@@ -126,157 +126,19 @@ plt.show()
 
 ## Step 2: Design and Test a Model Architecture
 
-Design and implement a deep learning model that learns to recognize traffic signs. Train and test your model on the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset).
+ Train and test of the model was done on the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset).
 
-There are various aspects to consider when thinking about this problem:
 
-- Neural network architecture
-- Play around preprocessing techniques (normalization, rgb to grayscale, etc)
-- Number of examples per label (some have more than others).
-- Generate fake data.
 
-Here is an example of a [published baseline model on this problem](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf). It's not required to be familiar with the approach used in the paper but, it's good practice to try to read papers like these.
+Here is an example of a [published baseline model on this problem](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf). 
 
-**NOTE:** The LeNet-5 implementation shown in the [classroom](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/6df7ae49-c61c-4bb2-a23e-6527e69209ec/lessons/601ae704-1035-4287-8b11-e2c2716217ad/concepts/d4aca031-508f-4e0b-b493-e7b706120f81) at the end of the CNN lesson is a solid starting point. You'll have to change the number of classes and possibly the preprocessing, but aside from that it's plug and play!
+
 
 ### Implementation
 
 Use the code cell (or multiple code cells, if necessary) to implement the first step of your project. Once you have completed your implementation and are satisfied with the results, be sure to thoroughly answer the questions that follow.
 
 
-```python
-### Preprocess the data here.
-### Feel free to use as many code cells as needed.
-
-# Convert to grayscale
-X_train_rgb = X_train
-X_train_gry = np.sum(X_train/3, axis=3, keepdims=True)
-
-X_test_rgb = X_test
-X_test_gry = np.sum(X_test/3, axis=3, keepdims=True)
-
-print('RGB shape:', X_train_rgb.shape)
-print('Grayscale shape:', X_train_gry.shape)
-```
-
-    RGB shape: (39209, 32, 32, 3)
-    Grayscale shape: (39209, 32, 32, 1)
-
-
-
-```python
-X_train = X_train_gry
-X_test = X_test_gry
-
-print('done')
-```
-
-    done
-
-
-
-```python
-# Visualize rgb vs grayscale
-n_rows = 8
-n_cols = 10
-offset = 9000
-fig, axs = plt.subplots(n_rows,n_cols, figsize=(18, 14))
-fig.subplots_adjust(hspace = .1, wspace=.001)
-axs = axs.ravel()
-for j in range(0,n_rows,2):
-    for i in range(n_cols):
-        index = i + j*n_cols
-        image = X_train_rgb[index + offset]
-        axs[index].axis('off')
-        axs[index].imshow(image)
-    for i in range(n_cols):
-        index = i + j*n_cols + n_cols 
-        image = X_train_gry[index + offset - n_cols].squeeze()
-        axs[index].axis('off')
-        axs[index].imshow(image, cmap='gray')
-```
-
-
-![png](output_12_0.png)
-
-
-
-```python
-print(y_train[0:500])
-```
-
-    [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
-
-
-**Jeremy's note**: Obviously this data is going to need to be shuffled.
-
-
-```python
-print(np.mean(X_train))
-print(np.mean(X_test))
-```
-
-    82.665052346
-    82.1484603612
-
-
-
-```python
-## Normalize the train and test datasets to (-1,1)
-
-X_train_normalized = (X_train - 128)/128 
-X_test_normalized = (X_test - 128)/128
-
-print(np.mean(X_train_normalized))
-print(np.mean(X_test_normalized))
-```
-
-    -0.354179278547
-    -0.358215153428
-
-
-
-```python
-print("Original shape:", X_train.shape)
-print("Normalized shape:", X_train_normalized.shape)
-fig, axs = plt.subplots(1,2, figsize=(10, 3))
-axs = axs.ravel()
-
-axs[0].axis('off')
-axs[0].set_title('normalized')
-axs[0].imshow(X_train_normalized[0].squeeze(), cmap='gray')
-
-axs[1].axis('off')
-axs[1].set_title('original')
-axs[1].imshow(X_train[0].squeeze(), cmap='gray')
-```
-
-    Original shape: (39209, 32, 32, 1)
-    Normalized shape: (39209, 32, 32, 1)
-
-
-
-
-
-    <matplotlib.image.AxesImage at 0x1224d5da0>
-
-
-
-
-![png](output_17_2.png)
 
 
 ### Question 1 
@@ -285,230 +147,11 @@ _Describe how you preprocessed the data. Why did you choose that technique?_
 
 **Answer:** 
 
-My dataset preprocessing consisted of:
- 1. Converting to grayscale - This worked well for Sermanet and LeCun as described in their traffic sign classification article. It also helps to reduce training time, which was nice when a GPU wasn't available.
- 2. Normalizing the data to the range (-1,1) - This was done using the line of code X_train_normalized = (X_train - 128)/128. The resulting dataset mean wasn't exactly zero, but it was reduced from around 82 to roughly -0.35. I chose to do this mostly because it was suggested in the lessons and it was fairly easy to do. How it helps is a bit nebulous to me, but [this site](http://stats.stackexchange.com/questions/185853/why-do-we-need-to-normalize-the-images-before-we-put-them-into-cnn) has an explanation, the gist of which is that having a wider distribution in the data would make it more difficult to train using a singlar learning rate. Different features could encompass far different ranges and a single learning rate might make some weights diverge.
-
-
-```python
-### Generate data additional data (OPTIONAL!)
-### and split the data into training/validation/testing sets here.
-### Feel free to use as many code cells as needed.
-```
-
-**Jeremy's note**: Four functions for augmenting the dataset: random_translate, random_scale, random_warp, and random_brightness
-
-
-```python
-import cv2
-
-def random_translate(img):
-    rows,cols,_ = img.shape
-    
-    # allow translation up to px pixels in x and y directions
-    px = 2
-    dx,dy = np.random.randint(-px,px,2)
-
-    M = np.float32([[1,0,dx],[0,1,dy]])
-    dst = cv2.warpAffine(img,M,(cols,rows))
-    
-    dst = dst[:,:,np.newaxis]
-    
-    return dst
-
-test_img = X_train_normalized[22222]
-
-test_dst = random_translate(test_img)
-
-fig, axs = plt.subplots(1,2, figsize=(10, 3))
-
-axs[0].axis('off')
-axs[0].imshow(test_img.squeeze(), cmap='gray')
-axs[0].set_title('original')
-
-axs[1].axis('off')
-axs[1].imshow(test_dst.squeeze(), cmap='gray')
-axs[1].set_title('translated')
-
-print('shape in/out:', test_img.shape, test_dst.shape)
-
-```
-
-    shape in/out: (32, 32, 1) (32, 32, 1)
-
-
-
-![png](output_22_1.png)
-
-
-
-```python
-def random_scaling(img):   
-    rows,cols,_ = img.shape
-
-    # transform limits
-    px = np.random.randint(-2,2)
-
-    # ending locations
-    pts1 = np.float32([[px,px],[rows-px,px],[px,cols-px],[rows-px,cols-px]])
-
-    # starting locations (4 corners)
-    pts2 = np.float32([[0,0],[rows,0],[0,cols],[rows,cols]])
-
-    M = cv2.getPerspectiveTransform(pts1,pts2)
-
-    dst = cv2.warpPerspective(img,M,(rows,cols))
-    
-    dst = dst[:,:,np.newaxis]
-    
-    return dst
-
-test_dst = random_scaling(test_img)
-    
-fig, axs = plt.subplots(1,2, figsize=(10, 3))
-
-axs[0].axis('off')
-axs[0].imshow(test_img.squeeze(), cmap='gray')
-axs[0].set_title('original')
-
-axs[1].axis('off')
-axs[1].imshow(test_dst.squeeze(), cmap='gray')
-axs[1].set_title('scaled')
-
-print('shape in/out:', test_img.shape, test_dst.shape)
-
-```
-
-    shape in/out: (32, 32, 1) (32, 32, 1)
-
-
-
-![png](output_23_1.png)
-
-
-
-```python
-def random_warp(img):
-    
-    rows,cols,_ = img.shape
-
-    # random scaling coefficients
-    rndx = np.random.rand(3) - 0.5
-    rndx *= cols * 0.06   # this coefficient determines the degree of warping
-    rndy = np.random.rand(3) - 0.5
-    rndy *= rows * 0.06
-
-    # 3 starting points for transform, 1/4 way from edges
-    x1 = cols/4
-    x2 = 3*cols/4
-    y1 = rows/4
-    y2 = 3*rows/4
-
-    pts1 = np.float32([[y1,x1],
-                       [y2,x1],
-                       [y1,x2]])
-    pts2 = np.float32([[y1+rndy[0],x1+rndx[0]],
-                       [y2+rndy[1],x1+rndx[1]],
-                       [y1+rndy[2],x2+rndx[2]]])
-
-    M = cv2.getAffineTransform(pts1,pts2)
-
-    dst = cv2.warpAffine(img,M,(cols,rows))
-    
-    dst = dst[:,:,np.newaxis]
-    
-    return dst
-
-test_dst = random_warp(test_img)
-
-fig, axs = plt.subplots(1,2, figsize=(10, 3))
-
-axs[0].axis('off')
-axs[0].imshow(test_img.squeeze(), cmap='gray')
-axs[0].set_title('original')
-
-axs[1].axis('off')
-axs[1].imshow(test_dst.squeeze(), cmap='gray')
-axs[1].set_title('warped')
-
-print('shape in/out:', test_img.shape, test_dst.shape)
-
-```
-
-    shape in/out: (32, 32, 1) (32, 32, 1)
-
-
-
-![png](output_24_1.png)
-
-
-
-```python
-def random_brightness(img):
-    shifted = img + 1.0   # shift to (0,2) range
-    img_max_value = max(shifted.flatten())
-    max_coef = 2.0/img_max_value
-    min_coef = max_coef - 0.1
-    coef = np.random.uniform(min_coef, max_coef)
-    dst = shifted * coef - 1.0
-    return dst
-
-test_dst = random_brightness(test_img)
-
-fig, axs = plt.subplots(1,2, figsize=(10, 3))
-
-axs[0].axis('off')
-axs[0].imshow(test_img.squeeze(), cmap='gray')
-axs[0].set_title('original')
-
-axs[1].axis('off')
-axs[1].imshow(test_dst.squeeze(), cmap='gray')
-axs[1].set_title('brightness adjusted')
-
-print('shape in/out:', test_img.shape, test_dst.shape)
-
-```
-
-    shape in/out: (32, 32, 1) (32, 32, 1)
-
-
-
-![png](output_25_1.png)
-
-
-
-```python
-# histogram of label frequency (once again, before data augmentation)
-hist, bins = np.histogram(y_train, bins=n_classes)
-width = 0.7 * (bins[1] - bins[0])
-center = (bins[:-1] + bins[1:]) / 2
-plt.bar(center, hist, align='center', width=width)
-plt.show()
-```
-
-
-![png](output_26_0.png)
-
-
-
-```python
-print(np.bincount(y_train))
-print("minimum samples for any label:", min(np.bincount(y_train)))
-```
-
-    [ 210 2220 2250 1410 1980 1860  420 1440 1410 1470 2010 1320 2100 2160  780
-      630  420 1110 1200  210  360  330  390  510  270 1500  600  240  540  270
-      450  780  240  689  420 1200  390  210 2070  300  360  240  240]
-    minimum samples for any label: 210
-
-
-
-```python
-print('X, y shapes:', X_train_normalized.shape, y_train.shape)
-
-input_indices = []
-output_indices = []
-
+The training data was preprocessed using the following approach:
+ 1. Converting to grayscale -
+ 2. Normalizing the data to the range (-1,1) - This was done using the line of code X_train_normalized = (X_train - 128)/128. The resulting dataset mean wasn't exactly zero, but it was reduced from around 82 to roughly -0.35.
+ 3. Data was augmented using Four functions: random_translate, random_scale, random_warp, and random_brightness. Augmentation was done for those classes whose sample size were less than 800. See code snippet below
+'''python
 for class_n in range(n_classes):
     print(class_n, ': ', end='')
     class_indices = np.where(y_train == class_n)
@@ -521,135 +164,6 @@ for class_n in range(n_classes):
             new_img = random_translate(random_scaling(random_warp(random_brightness(new_img))))
             X_train_normalized = np.concatenate((X_train_normalized, [new_img]), axis=0)
             y_train = np.concatenate((y_train, [class_n]), axis=0)
-            if i % 50 == 0:
-                print('|', end='')
-            elif i % 10 == 0:
-                print('-',end='')
-    print('')
-            
-print('X, y shapes:', X_train_normalized.shape, y_train.shape)
-        
-```
-
-    X, y shapes: (39209, 32, 32, 1) (39209,)
-    0 : |----|----|----|----|----|----|----|----|----|----|----|---
-    1 : 
-    2 : 
-    3 : 
-    4 : 
-    5 : 
-    6 : |----|----|----|----|----|----|----|--
-    7 : 
-    8 : 
-    9 : 
-    10 : 
-    11 : 
-    12 : 
-    13 : 
-    14 : |-
-    15 : |----|----|----|-
-    16 : |----|----|----|----|----|----|----|--
-    17 : 
-    18 : 
-    19 : |----|----|----|----|----|----|----|----|----|----|----|---
-    20 : |----|----|----|----|----|----|----|----|---
-    21 : |----|----|----|----|----|----|----|----|----|-
-    22 : |----|----|----|----|----|----|----|----|
-    23 : |----|----|----|----|----|---
-    24 : |----|----|----|----|----|----|----|----|----|----|--
-    25 : 
-    26 : |----|----|----|----
-    27 : |----|----|----|----|----|----|----|----|----|----|----|
-    28 : |----|----|----|----|----|
-    29 : |----|----|----|----|----|----|----|----|----|----|--
-    30 : |----|----|----|----|----|----|----
-    31 : |-
-    32 : |----|----|----|----|----|----|----|----|----|----|----|
-    33 : |----|----|-
-    34 : |----|----|----|----|----|----|----|--
-    35 : 
-    36 : |----|----|----|----|----|----|----|----|
-    37 : |----|----|----|----|----|----|----|----|----|----|----|---
-    38 : 
-    39 : |----|----|----|----|----|----|----|----|----|----
-    40 : |----|----|----|----|----|----|----|----|---
-    41 : |----|----|----|----|----|----|----|----|----|----|----|
-    42 : |----|----|----|----|----|----|----|----|----|----|----|
-    X, y shapes: (49510, 32, 32, 1) (49510,)
-
-
-
-```python
-# show comparisons of 5 random augmented data points
-choices = list(range(len(input_indices)))
-picks = []
-for i in range(5):
-    rnd_index = np.random.randint(low=0,high=len(choices))
-    picks.append(choices.pop(rnd_index))
-fig, axs = plt.subplots(2,5, figsize=(15, 6))
-fig.subplots_adjust(hspace = .2, wspace=.001)
-axs = axs.ravel()
-for i in range(5):
-    image = X_train_normalized[input_indices[picks[i]]].squeeze()
-    axs[i].axis('off')
-    axs[i].imshow(image, cmap = 'gray')
-    axs[i].set_title(y_train[input_indices[picks[i]]])
-for i in range(5):
-    image = X_train_normalized[output_indices[picks[i]]].squeeze()
-    axs[i+5].axis('off')
-    axs[i+5].imshow(image, cmap = 'gray')
-    axs[i+5].set_title(y_train[output_indices[picks[i]]])
-```
-
-
-![png](output_29_0.png)
-
-
-
-```python
-# histogram of label frequency
-hist, bins = np.histogram(y_train, bins=n_classes)
-width = 0.7 * (bins[1] - bins[0])
-center = (bins[:-1] + bins[1:]) / 2
-plt.bar(center, hist, align='center', width=width)
-plt.show()
-```
-
-
-![png](output_30_0.png)
-
-
-
-```python
-## Shuffle the training dataset
-
-from sklearn.utils import shuffle
-
-X_train_normalized, y_train = shuffle(X_train_normalized, y_train)
-
-print('done')
-```
-
-    done
-
-
-
-```python
-## Split validation dataset off from training dataset
-
-from sklearn.model_selection import train_test_split
-
-X_train, X_validation, y_train, y_validation = train_test_split(X_train_normalized, y_train, 
-                                                                test_size=0.20, random_state=42)
-
-print("Old X_train size:",len(X_train_normalized))
-print("New X_train size:",len(X_train))
-print("X_validation size:",len(X_validation))
-```
-
-    Old X_train size: 49510
-    New X_train size: 39608
-    X_validation size: 9902
 
 
 ### Question 2
@@ -658,9 +172,9 @@ _Describe how you set up the training, validation and testing data for your mode
 
 **Answer:** 
 
-Rumor has it that data augmentation is the single best method to increase accuracy of the model. Because several classes in the data have far fewer samples than others the model will tend to be biased toward those classes with more samples. I implemented augmentation by creating copies of each sample for a class (sometimes several copies) in order to boost the number of samples for the class to 800 (if that class didn't already have at least 800 samples). Each copy is fed into a "jitter" pipeline that randomly translates, scales, warps, and brightness adjusts the image. I sought to keep the parameters for these transformations relatively conservative and keep the sign in the image recognizable. This was by far the most laborious part of the project, and it takes quite some time to run the code.
+Data was augmented for those classes whose sample size was less than 800. Augmentation provides variety to the sample set and is the single best method to increase accuracy of the model. Because several classes in the data have far fewer samples than others the model will tend to be biased toward those classes with more samples. The following classes were augmented as theri sample size were less than 800 . Class 0,6,14-16, 19-24, 26-30,32-34,36-37, 39-42.
 
-I also used the SciKit Learn train_test_split function to create a validation set out of the training set. I used 20% of the testing set to create the validation set.
+Then the SciKit Learn train_test_split function was used to create a validation set out of the training set. The split used was 80 % training set and 20% testing was set to create the validation set.
 
 
 ```python
