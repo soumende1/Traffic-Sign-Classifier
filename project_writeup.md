@@ -246,7 +246,7 @@ def LeNet(x):
     # TODO: Layer 5: Fully Connected. Input = 84. Output = 43.
     W5 = tf.Variable(tf.truncated_normal(shape=(84, 43), mean = mu, stddev = sigma))
     b5 = tf.Variable(tf.zeros(43)) 
-    logits = tf.add(tf.matmul(x, W5), b5)
+    logits = tf.add(tf.matmul(x, W5), b5) 
     
     return logits
 
