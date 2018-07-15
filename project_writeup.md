@@ -103,7 +103,7 @@ for i in range(10):
     axs[i].set_title(y_train[index])
 
 ```
-![10 randomly selected images](/images/output_6_0.png)
+![10 randomly selected images](/images/im01.png)
 
 
 
