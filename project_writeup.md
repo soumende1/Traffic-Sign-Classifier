@@ -119,7 +119,7 @@ plt.show()
 ```
 
 
-![png](output_7_0.png)
+![Frequency count of initial training data](/images/im02.png)
 
 
 ----
