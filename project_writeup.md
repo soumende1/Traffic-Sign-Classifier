@@ -422,8 +422,7 @@ Several pictures of traffic signs found from public domain were used to test the
 The file `signnames.csv` can be used to to map the predicted class id (integer) to the actual sign name.
 
 
-
-
+![Test on Random images](/images/im03.png)
 
 
 ### Implementation
