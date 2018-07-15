@@ -421,6 +421,11 @@ Several pictures of traffic signs found from public domain were used to test the
 
 The file `signnames.csv` can be used to to map the predicted class id (integer) to the actual sign name.
 
+
+
+
+
+
 ### Implementation
 
 Use the code cell (or multiple code cells, if necessary) to implement the first step of your project. Once you have completed your implementation and are satisfied with the results, be sure to thoroughly answer the questions that follow.
@@ -438,6 +443,7 @@ _Choose five candidate images of traffic signs and provide them in the report. A
 
 All five images were classified correctly by the model. the prediction works when the test images were of the size 32 by 32 pixel. when another image ie used which is more that that size then suitabe tranformation was used to resize them to 32 by 32 size.
 ''python
+
     img_resized = cv2.resize(img, (32, 32))
 
 
@@ -467,7 +473,7 @@ _**NOTE:** You could check the accuracy manually by using `signnames.csv` (same 
 
 **Answer:**
 
-Uh... yeah. It predicted the new signs perfectly. I feel like I should have found some more difficult images. I suppose I could mess them up and see how well it works afterwards, but... I'm just going to bask in that "100%" for now.
+The model predicted on  new signs perfectly. 
 
 
 ```python
