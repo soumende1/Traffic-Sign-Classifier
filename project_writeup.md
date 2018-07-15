@@ -259,7 +259,7 @@ print('done')
 ## Modified LeNet Model Architecture
 *adapted from Sermanet/LeCunn traffic sign classification journal article*
 
-![Modified LeNet](/images/modifiedLeNet.jpeg)
+![Modified LeNet] (/images/modifiedLeNet.jpeg)
 
 
 ```python
@@ -411,7 +411,7 @@ _What approach did you take in coming up with a solution to this problem? It may
 
 **Answer:**
 
-Starting was done by implementing  pre-defined architectures (LeNet and the Sermanet/LeCun model) and tweaking the model using  trial and error. working on mock codes in the class room training and also looking for some example codes for  Tensorflow and LeNet labs helped
+Starting was done by implementing  pre-defined architectures (LeNet and the Sermanet/LeCun model) and tweaking the model using  trial and error. working on mock codes in the class room training and also looking at some example codes for Tensorflow and LeNet labs helped in getting this solution
 
 ---
 
@@ -440,7 +440,7 @@ _Choose five candidate images of traffic signs and provide them in the report. A
 
 **Answer:** 
 
-All five images were classified correctly by the model. the prediction works when the test images were of the size 32 by 32 pixel. when another image ie used which is more that that size then suitabe tranformation was used to resize them to 32 by 32 size.
+All five images were classified correctly by the model. the prediction works when the test images were of the size 32 by 32 pixel. when another image ie used which is more that that size then suitable tranformation was used to resize them to 32 by 32 size.
 ''python
 
     img_resized = cv2.resize(img, (32, 32))
@@ -467,12 +467,12 @@ with tf.Session() as sess:
 
 _Is your model able to perform equally well on captured pictures when compared to testing on the dataset? The simplest way to do this check the accuracy of the predictions. For example, if the model predicted 1 out of 5 signs correctly, it's 20% accurate._
 
-_**NOTE:** You could check the accuracy manually by using `signnames.csv` (same directory). This file has a mapping from the class id (0-42) to the corresponding sign name. So, you could take the class id the model outputs, lookup the name in `signnames.csv` and see if it matches the sign from the image._
+
 
 
 **Answer:**
 
-The model predicted on  new signs perfectly. 
+The model predicted all the  new signs perfectly. 
 
 
 ```python
@@ -525,64 +525,10 @@ with tf.Session() as sess:
 
 `tf.nn.top_k` will return the values and indices (class ids) of the top k predictions. So if k=3, for each sign, it'll return the 3 largest probabilities (out of a possible 43) and the correspoding class ids.
 
-Take this numpy array as an example:
 
-```
-# (5, 6) array
-a = np.array([[ 0.24879643,  0.07032244,  0.12641572,  0.34763842,  0.07893497,
-         0.12789202],
-       [ 0.28086119,  0.27569815,  0.08594638,  0.0178669 ,  0.18063401,
-         0.15899337],
-       [ 0.26076848,  0.23664738,  0.08020603,  0.07001922,  0.1134371 ,
-         0.23892179],
-       [ 0.11943333,  0.29198961,  0.02605103,  0.26234032,  0.1351348 ,
-         0.16505091],
-       [ 0.09561176,  0.34396535,  0.0643941 ,  0.16240774,  0.24206137,
-         0.09155967]])
-```
-
-Running it through `sess.run(tf.nn.top_k(tf.constant(a), k=3))` produces:
-
-```
-TopKV2(values=array([[ 0.34763842,  0.24879643,  0.12789202],
-       [ 0.28086119,  0.27569815,  0.18063401],
-       [ 0.26076848,  0.23892179,  0.23664738],
-       [ 0.29198961,  0.26234032,  0.16505091],
-       [ 0.34396535,  0.24206137,  0.16240774]]), indices=array([[3, 0, 5],
-       [0, 1, 4],
-       [0, 5, 1],
-       [1, 3, 5],
-       [1, 4, 3]], dtype=int32))
-```
-
-Looking just at the first row we get `[ 0.34763842,  0.24879643,  0.12789202]`, you can confirm these are the 3 largest probabilities in `a`. You'll also notice `[3, 0, 5]` are the corresponding indices.
 
 **Answer:**
 
-The model is somehow ONE HUNDRED PERCENT certain of 7 out of 8 of the signs I gave it (and it's correct, as you can see - I pulled an image for each of the top 3 predicted classes from the original dataset for comparison). And even on the last image, it's 95% certain. Is that even possible?
-
-> **Note**: Once you have completed all of the code implementations and successfully answered each question above, you may finalize your work by exporting the iPython Notebook as an HTML document. You can do this by using the menu above and navigating to  \n",
-    "**File -> Download as -> HTML (.html)**. Include the finished document along with this notebook as your submission.
+The model is 100 % accurate
 
 
-```python
-aug_train = {'features': X_train_normalized,
-             'labels': y_train}
-aug_val = {'features': X_validation,
-             'labels': y_validation}
-aug_test = {'features': X_test_normalized,
-             'labels': y_test}
-pickle.dump(aug_train, open( "./my-augmented-data/aug_train.p", "wb" ) )
-pickle.dump(aug_val, open( "./my-augmented-data/aug_val.p", "wb" ) )
-pickle.dump(aug_test, open( "./my-augmented-data/aug_test.p", "wb" ) )
-
-print('done')
-```
-
-    done
-
-
-
-```python
-
-```
