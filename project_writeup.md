@@ -259,7 +259,7 @@ print('done')
 ## Modified LeNet Model Architecture
 *adapted from Sermanet/LeCunn traffic sign classification journal article*
 
-![Modified LeNet](/files/images/modifiedLeNet.jpeg)
+![Modified LeNet](/images/modifiedLeNet.jpeg)
 
 
 ```python
