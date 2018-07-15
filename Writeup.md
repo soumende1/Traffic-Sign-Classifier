@@ -1,11 +1,16 @@
-# **Uadcity Self Driving Car Nanodegree Program: Finding Lane Lines on the Road**
-## This project requires us to detect lanes lines in a video file using basic computer vision. In the video, the lines on the road show us where the lanes to serve as  constant reference for the vehicle to self steer. This project aims at automatically detecting lane lines using an algorithm. 
+# Project #2: Build a Traffic Sign Recognition Program
+## In this project, we need to design and train a model so it can decode traffic signs from natural images by using the German Traffic Sign Dataset. After the model is trained, we need test our model program on new images of traffic signs.
 
-The tools used are:
-1.	Python3
-2.	OpenCV
-3.	Numpy
-4.	Jupyter Notebook
+##Dependencies
+This project requires Python 3.5 and the following Python libraries installed:
+•	Jupyter
+•	NumPy
+•	SciPy
+•	scikit-learn
+•	TensorFlow
+•	Matplotlib
+•	Pandas (Optional)
+
 
 The following steps were used to develop and test the above algorithm:
 •	Import Initial Images
