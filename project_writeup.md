@@ -64,9 +64,11 @@ The pickled data thus obtained is a dictionary with 4 key/value pairs:
 - `'features'` is a 4D array containing raw pixel data of the traffic sign images, (num examples, width, height, channels).
 - `'labels'` is a 2D array containing the label/class id of the traffic sign. The file `signnames.csv` contains id -> name mappings for each id.
 - `'sizes'` is a list containing tuples, (width, height) representing the the original width and height the image.
-- `'coords'` is a list containing tuples, (x1, y1, x2, y2) representing coordinates of a bounding box around the sign in the image. **THESE COORDINATES ASSUME THE ORIGINAL IMAGE. THE PICKLED DATA CONTAINS RESIZED VERSIONS (32 by 32) OF THESE IMAGES**
+- `'coords'` is a list containing tuples, (x1, y1, x2, y2) representing coordinates of a bounding box around the sign in the image. 
 
-Complete the basic data summary below.
+**THESE COORDINATES ASSUME THE ORIGINAL IMAGE. THE PICKLED DATA CONTAINS RESIZED VERSIONS (32 by 32) OF THESE IMAGES**
+
+The basic data summary below.
 
     Number of training examples = 39209
     Number of testing examples = 12630
@@ -101,9 +103,9 @@ for i in range(10):
     axs[i].set_title(y_train[index])
 
 ```
+![10 randomly selected images](/images/output_6_0.png)
 
 
-![png](output_6_0.png)
 
 
 
