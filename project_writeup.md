@@ -5,12 +5,19 @@
 
 ## Project: Build a Traffic Sign Recognition Classifier
 
-In this notebook, a template is provided for you to implement your functionality in stages which is required to successfully complete this project. If additional code is required that cannot be included in the notebook, be sure that the Python code is successfully imported and included in your submission, if necessary. Sections that begin with **'Implementation'** in the header indicate where you should begin your implementation for your project. Note that some sections of implementation are optional, and will be marked with **'Optional'** in the header.
+This is the template provided by Udacity. Details of the implmentation are provided in the description below
+The objective of the project 
 
-In addition to implementing code, there will be questions that you must answer which relate to the project and your implementation. Each section where you will answer a question is preceded by a **'Question'** header. Carefully read each question and provide thorough answers in the following text boxes that begin with **'Answer:'**. Your project submission will be evaluated based on your answers to each of the questions and the implementation you provide.
+The goals / steps of this project are the following:
 
->**Note:** Code and Markdown cells can be executed using the **Shift + Enter** keyboard shortcut. In addition, Markdown cells can be edited by typically double-clicking the cell to enter edit mode.
+Load the data set (see below for links to the project data set)
+Explore, summarize and visualize the data set
+Design, train and test a model architecture
+Use the model to make predictions on new images
+Analyze the softmax probabilities of the new images
+Summarize the results with a written report
 
+This is implemented in a step wise manner, and given below are description of each steps
 ---
 ## Step 0: Load The Data
 
@@ -21,8 +28,8 @@ import pickle
 
 # TODO: Fill this in based on where you saved the training and testing data
 
-training_file = "./traffic-signs-data/train.p"
-testing_file = "./traffic-signs-data/test.p"
+training_file = "train.p"
+testing_file = "test.p"
 
 with open(training_file, mode='rb') as f:
     train = pickle.load(f)
@@ -48,7 +55,11 @@ print("y_test shape:", y_test.shape)
 
 ## Step 1: Dataset Summary & Exploration
 
-The pickled data is a dictionary with 4 key/value pairs:
+The base data is obtained from [The German Traffic Sign Recognition Benchmark](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset) . It has a archive This archive contains the following structure: There is one directory for each of the 43 classes (0000 - 00043). Each class represents an unique traffic sign. Each directory contains the corresponding training images and one text file with annotations, eg. GT-00000.csv. 
+
+However the training data and test data used is 'pickled data'. “Pickling” is the process whereby a Python object hierarchy is converted into a byte stream,
+
+The pickled data thus obtained is a dictionary with 4 key/value pairs:
 
 - `'features'` is a 4D array containing raw pixel data of the traffic sign images, (num examples, width, height, channels).
 - `'labels'` is a 2D array containing the label/class id of the traffic sign. The file `signnames.csv` contains id -> name mappings for each id.
@@ -56,29 +67,6 @@ The pickled data is a dictionary with 4 key/value pairs:
 - `'coords'` is a list containing tuples, (x1, y1, x2, y2) representing coordinates of a bounding box around the sign in the image. **THESE COORDINATES ASSUME THE ORIGINAL IMAGE. THE PICKLED DATA CONTAINS RESIZED VERSIONS (32 by 32) OF THESE IMAGES**
 
 Complete the basic data summary below.
-
-
-```python
-### Replace each question mark with the appropriate value.
-import numpy as np
-
-# TODO: Number of training examples
-n_train = len(X_train)
-
-# TODO: Number of testing examples.
-n_test = len(X_test)
-
-# TODO: What's the shape of an traffic sign image?
-image_shape = X_train[0].shape
-
-# TODO: How many unique classes/labels there are in the dataset.
-n_classes = len(np.unique(y_train))
-
-print("Number of training examples =", n_train)
-print("Number of testing examples =", n_test)
-print("Image data shape =", image_shape)
-print("Number of classes =", n_classes)
-```
 
     Number of training examples = 39209
     Number of testing examples = 12630
