@@ -531,4 +531,4 @@ with tf.Session() as sess:
 
 The model is 100 % accurate
 
-![softmax probabilities](softmax.png)
+![softmax probabilities](/images/softmax.png)
