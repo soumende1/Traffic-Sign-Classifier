@@ -3,13 +3,13 @@
 
 ##Dependencies
 This project requires Python 3.5 and the following Python libraries installed:
-•	Jupyter
-•	NumPy
-•	SciPy
-•	scikit-learn
-•	TensorFlow
-•	Matplotlib
-•	Pandas (Optional)
+•	*Jupyter
+•	*NumPy
+•	*SciPy
+•	*scikit-learn
+•	*TensorFlow
+•	*Matplotlib
+•	*Pandas (Optional)
 
 
 The following steps were used to develop and test the above algorithm:
