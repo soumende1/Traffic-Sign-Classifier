@@ -159,7 +159,8 @@ The training data was preprocessed using the following approach:
  
 '''python
 
-for class_n in range(n_classes):
+    for class_n in range(n_classes):
+
     print(class_n, ': ', end='')
     
     class_indices = np.where(y_train == class_n)
