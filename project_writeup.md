@@ -161,16 +161,27 @@ The training data was preprocessed using the following approach:
 
 for class_n in range(n_classes):
     print(class_n, ': ', end='')
+    
     class_indices = np.where(y_train == class_n)
+    
     n_samples = len(class_indices[0])
+    
     if n_samples < 800:
+    
         for i in range(800 - n_samples):
+        
             input_indices.append(class_indices[0][i%n_samples])
+            
             output_indices.append(X_train_normalized.shape[0])
+            
             new_img = X_train_normalized[class_indices[0][i % n_samples]]
+            
             new_img = random_translate(random_scaling(random_warp(random_brightness(new_img))))
+            
             X_train_normalized = np.concatenate((X_train_normalized, [new_img]), axis=0)
+            
             y_train = np.concatenate((y_train, [class_n]), axis=0)
+            
 
 
 ### Question 2
