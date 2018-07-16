@@ -421,6 +421,8 @@ To train the network Adam optimizer was used. The final settings used were:
 - sigma: 0.1
 - dropout keep probability: 0.5
 
+The accuracy obtained during the training was 0.99
+
 ### Question 5
 
 
