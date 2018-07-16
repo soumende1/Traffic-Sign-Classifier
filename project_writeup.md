@@ -29,7 +29,9 @@ import pickle
 # TODO: Fill this in based on where you saved the training and testing data
 
 # I had a bit of struggle here, how to get the pickled files for training and also how to upload in github repository
-I found it is best to keep this URL : https://d17h27t6h515a5.cloudfront.net/topher/2017/February/5898cd6f_traffic-signs-data/traffic-signs-data.zip.Go to this link and simply download
+I found it is best to keep this URL : 
+#https://d17h27t6h515a5.cloudfront.net/topher/2017/February/5898cd6f_traffic-signs-data/traffic-signs-data.zip
+Go to this link and simply download
 
 training_file = "train.p"
 testing_file = "test.p"
